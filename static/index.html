@@ -1,0 +1,143 @@
+<html>
+
+<head>
+	<title>Welcome to Mystic ATX!</title>
+	<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+	<div id="modalSuccess" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Thank you!</h4>
+				</div>
+					<div class="modal-body">
+						Awesome!  We'll send you an invite to our Slack soon.<br>
+						In the meantime, <a href="https://www.facebook.com/groups/keepAustinBlue">join the Facebook group!</a><br>
+						And, as always, Keep Austin Blue!
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" class="close" data-dismiss="modal">Go team Mystic!</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Signup</h4>
+				</div>
+				<form action="https://docs.google.com/forms/d/1uBDJeJKuv1y3slOhCTc580GaV6-CcqvGwwnvtA0aCWc/formResponse" method="POST">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="emailAddress">Email Address</label>
+							<input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Email" required>
+						</div>
+						<div class="form-group">
+							<label for="trainerName">Trainer Name</label>
+							<input type="text" class="form-control" id="trainerName" name="trainerName" placeholder="Ash Ketchum" required>
+						</div>
+						<div class="form-group">
+							<label for="referrer">How did you hear about us?</label>
+					<select id="referrer" name="referrer" class="form-control">
+					  <option>Please select an option...</option>
+					  <option value="trainer">Another Trainer</option>
+					  <option value="reddit">Reddit</option>
+					  <option value="discord">Discord</option>
+					  <option value="other">Other</option>
+					</select>
+						</div>
+						<div class="form-group" id="refTrainerGroup" style="display:none">
+							<label for="refTrainer">Which trainer?</label>
+							<input type="text" class="form-control" name="refTrainer" id="refTrainer" placeholder="Garry Oak">
+						</div>
+						<div class="form-group" id="refOtherGroup" style="display:none">
+							<label for="refOther">Tell us how:</label>
+							<input type="text" class="form-control" name="refOther" id="refOther" placeholder="Enter some text...">
+						</div>
+						<div class="form-group">
+							<label for="otherStuff">Anything else you'd like to tell us?</label>
+							<input type="text" class="form-control" name="otherStuff" id="otherStuff" placeholder="Anything goes here!">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<video class="animation-main img-responsive" autoplay>
+		<source src="mystic.webm">
+		<img src="mystic.png">
+	</video>
+	<img class="img-main img-responsive" src="mystic.png">
+	<div class="container-fluid">
+		<div class="text-center">
+			<h1>Welcome to Mystic ATX</h1>
+			<button class="btn btn-primary vertical-center" data-toggle="modal" data-target="#myModal">
+					Join the community
+				</button>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#referrer").change(function() {
+				// foo is the id of the other select box 
+				if ($(this).val() == "trainer") {
+					$("#refTrainerGroup").show();
+					$("#refOtherGroup").hide();
+				}
+				else if ($(this).val() == "other") {
+					$("#refOtherGroup").show();
+					$("#refTrainerGroup").hide();
+				}
+				else {
+					$("#refTrainerGroup").hide();
+					$("#refOtherGroup").hide();
+				}
+			});
+		});
+		$('form').submit(function(event){
+			var entry = {
+					'entry.1320489325': $('input[name=emailAddress]').val(), //Email
+					'entry.1208274997': $('input[name=trainerName]').val(),  //Trainer name
+					'entry.2062350881': $('#referrer option:selected').text(),  //Referrer
+					'entry.1874333800': $('input[name=refTrainer]').val(),  //Referring Trainer
+					'entry.204879856':  $('input[name=refOther]').val(), //Other Referrer
+					'entry.988833288':  $('input[name=otherStuff]').val() //Other info
+				}
+			$.post("https://docs.google.com/forms/d/1uBDJeJKuv1y3slOhCTc580GaV6-CcqvGwwnvtA0aCWc/formResponse", entry).then(
+			function(data){
+				//CORS will stop the page from retrievieng the data, so this is blank
+			},function(data){
+				$('#myModal').modal('toggle');
+				$('#modalSuccess').modal('toggle');
+			});
+			event.preventDefault();
+		});
+	</script>
+</body>
+
+</html>
